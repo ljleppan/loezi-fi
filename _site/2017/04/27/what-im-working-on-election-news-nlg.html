@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Loezi - What I&#39;m working on: Election news NLG</title>
+  <meta name="description" content="I’m currently employed by the Discovery research group on a project called Immersive Automation. So what’s that all about?">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/2017/04/27/what-im-working-on-election-news-nlg.html">
+  <link rel="alternate" type="application/rss+xml" title="Leo Leppänen" href="/feed.xml">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300" rel="stylesheet"> 
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="hero is-primary is-bold">
+  <div class="hero-head">
+    <div class="nav">
+      <div class="container">
+        <div class="nav-right">
+          
+          
+          
+            
+                
+                
+                  <a class="nav-item" href="/blog.html">Blog</a>
+                
+            
+                
+                
+                  <a class="nav-item" href="/">About me</a>
+                
+            
+                
+                
+            
+                
+                
+                  <a class="nav-item" href="/publications.html">Publications</a>
+                
+            
+                
+                
+            
+                
+                
+            
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">Leo Leppänen</h1>
+      <h2 class="subtitle">What I'm working on: Election news NLG</h2>
+    </div>
+  </div>
+</header>
+
+    
+    <main class="section">
+      <article class="container">
+  <header class="heading">
+    <h1 class="title">What I&#39;m working on: Election news NLG</h1>
+    <h5 class="subtitle">
+      <time datetime="2017-04-27T00:01:00+03:00" >
+        Apr 27, 2017
+      </time>
+      
+        • <span>ljleppan</span>
+      
+    </h5>
+  </header>
+  <br>
+  <section class="content">
+    <p>I’m currently employed by the Discovery research group on a project called Immersive Automation. So what’s that all about?</p>
+
+<p>To keep the background short, I’ll just quote the general project description from the <a href="https://immersiveautomation.com/">Immersive Automation website</a>:</p>
+
+<blockquote>
+  <p>The Immersive Automation-project is a research consortium where data scientists, linguists, and journalists work together with researchers and media companies to bring forward a solution for producing engaging, data driven content. Our aim is to create a roadmap and a demonstration of a future news ecosystem based on automated storytelling, intense audience engagement, and user experience. The duration of the project is until end of May 2018.</p>
+</blockquote>
+
+<p>So that’s a lot of fancy words. In practice, I’ve worked since the start of the year on a prototype for automated news generation in multiple languages. Our first prototype, <a href="https://www.vaalibotti.fi?language=en">Valtteri</a> was up and running just in time for the Finnish municipal elections of 2017. It obtained some media attention <a href="http://kuntalehti.fi/kuntauutiset/paatoksenteko/ylen-uutisrobotti-nakuttaa-vaalitulosuutisia-sekunnin-murto-osassa/">[1]</a>, <a href="http://www.hs.fi/blogi/datablogi/art-2000005166354.html">[2]</a>, <a href="http://www.hs.fi/paivanlehti/12042017/art-2000005166354.html">[3]</a>, <a href="https://www.helsinki.fi/sv/aktuellt/valtteri-skriver-sjalvstandigt-nyheter-pa-flera-sprak">[4]</a>, <a href="https://www.tekes.fi/nyt/uutiset-2017/valtteri-botti-tuottaa-itsenaisesti-vaaliuutisia-eri-kielilla/">[5]</a>, <a href="http://www.vtt.fi/medialle/uutiset/valtteri-botti-tuottaa-itsen%C3%A4isesti-vaaliuutisia-usealla-kielell%C3%A4">[6]</a> by being able to generate around 750 000 different news articles in each of the three languages it knows. What I personally view as the biggest achievement is that we’re doing some surprisingly complicated stuff behind the scenes and still achieving speeds that make the system usable as a real-time web application.</p>
+
+<p>While this first prototype is lacking in some key areas, it seems like a promising step forwards in our project.  After all, we’re only four months in to the 18 month journey, and already have big plans on how to take things much further.</p>
+
+<p>In any case, I’ll probably create a few blog posts in the future on how Valtteri works and what exactly led to that architecture. I’ll also expand upon how we plan to continue the research now that the first prototype is complete.</p>
+
+<p>Ps. If you have the time, check out the <a href="https://immersiveautomation.com/news/">Immersive Automation project blog</a>!</p>
+
+  </section>
+
+  <aside class="footnotes"></aside>
+
+  <script>
+    console.log("Run");
+    footnote_area = document.getElementsByClassName("footnotes")[0];
+    footnote_origins = document.querySelectorAll("aside.footnote");
+
+    // For each footnotable thing
+    for (var i = 0; i < footnote_origins.length; i++) {
+      footnote_origin = footnote_origins[0];
+      content = footnote_origin.innerHTML;
+      identifier = "[" + (i + 1) + "]";
+
+      // Append footnote and anchor to bottom of page
+      footnote_area.insertAdjacentHTML('beforeEnd', '<a id="footnote-' + (i+1)  + '"></a><p class="footnote">' + identifier + " " + content + '</p>');
+    
+      // Replace in-text footnote with identifier and link
+      var replacement = document.createElement('sup');
+      replacement.innerHTML = '<a href="#footnote-' + (i+1) + '">' + identifier + '</a>';
+
+      footnote_origin.parentNode.insertBefore(replacement, footnote_origin);
+      footnote_origin.parentNode.removeChild(footnote_origin);
+    }
+  </script>
+</article>
+
+    </main>
+    
+    <footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        <a class="icon is-medium" href="https://github.com/ljleppan">
+          <i class="fa fa-github"></i>
+        </a>
+        <a class="icon is-medium" href="https://fi.linkedin.com/pub/leo-lepp%C3%A4nen/b5/a65/494">
+          <i class="fa fa-linkedin-square"></i>
+        </a>
+        <a class="icon is-medium" href="https://www.cs.helsinki.fi/people/ljleppan">
+          <img src="http://localhost:4000/assets/hy_logo_wine.png" style="width: 21px; height: 21px;" alt="UH">
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+  
+  </body>
+
+</html>
