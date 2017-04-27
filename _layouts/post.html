@@ -1,0 +1,45 @@
+---
+layout: default
+---
+<article class="container">
+  <header class="heading">
+    <h1 class="title">{{ page.title | escape }}</h1>
+    <h5 class="subtitle">
+      <time datetime="{{ page.date | date_to_xmlschema }}" >
+        {{ page.date | date: "%b %-d, %Y" }}
+      </time>
+      {% if page.author %}
+        • <span>{{ page.author }}</span>
+      {% endif %}
+    </h5>
+  </header>
+  <br>
+  <section class="content">
+    {{ content }}
+  </section>
+
+  <aside class="footnotes"></aside>
+
+  <script>
+    console.log("Run");
+    footnote_area = document.getElementsByClassName("footnotes")[0];
+    footnote_origins = document.querySelectorAll("aside.footnote");
+
+    // For each footnotable thing
+    for (var i = 0; i < footnote_origins.length; i++) {
+      footnote_origin = footnote_origins[0];
+      content = footnote_origin.innerHTML;
+      identifier = "[" + (i + 1) + "]";
+
+      // Append footnote and anchor to bottom of page
+      footnote_area.insertAdjacentHTML('beforeEnd', '<a id="footnote-' + (i+1)  + '"></a><p class="footnote">' + identifier + " " + content + '</p>');
+    
+      // Replace in-text footnote with identifier and link
+      var replacement = document.createElement('sup');
+      replacement.innerHTML = '<a href="#footnote-' + (i+1) + '">' + identifier + '</a>';
+
+      footnote_origin.parentNode.insertBefore(replacement, footnote_origin);
+      footnote_origin.parentNode.removeChild(footnote_origin);
+    }
+  </script>
+</article>

@@ -1,0 +1,44 @@
+---
+---
+
+@import "bulma/sass/utilities/initial-variables";
+
+$primary: #8e1256;
+$family-primary: "Merriweather", "Georgia", serif;
+
+@import "bulma/bulma";
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.author-icon {
+  border-radius: 32px;
+  border: 1px solid #111;
+}
+
+h1, h2, h3, h4, h5, h6 {  
+    font-family: 'Alegreya Sans', sans-serif;
+}
+
+.content {
+  max-width: 650px;
+}
+
+footer .content {
+  max-width: initial;
+}
+
+.footnotes {
+  font-size: small;
+}
+
+p a {
+  font-weight: bold;
+}
