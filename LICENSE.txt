@@ -30,7 +30,7 @@ SOFTWARE.
 
 ----
 
-This license applies to the minimal theme for Jekyll:
+This license applies to the minima theme for Jekyll:
 
 The MIT License (MIT)
 
