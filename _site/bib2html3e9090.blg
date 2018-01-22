@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: bib2html3e9090.aux
+The style file: /home/ljleppan/git/loezi-fi-jekyll/references.bst.bst
+Database file #1: /home/ljleppan/git/loezi-fi-jekyll/publications_ljleppan.bib
+Repeated entry---line 133 of file /home/ljleppan/git/loezi-fi-jekyll/publications_ljleppan.bib
+ : @inproceedings{leppanen2016pauses
+ :                                  ,
+I'm skipping whatever remains of this entry
+Warning--can't use both author and editor fields in Nurminen2017
+You've used 11 entries,
+            2134 wiz_defined-function locations,
+            570 strings with 7048 characters,
+and the built_in function-call counts, 4540 in all, are:
+= -- 451
+> -- 237
+< -- 5
++ -- 93
+- -- 82
+* -- 322
+:= -- 734
+add.period$ -- 43
+call.type$ -- 11
+change.case$ -- 63
+chr.to.int$ -- 0
+cite$ -- 12
+duplicate$ -- 196
+empty$ -- 347
+format.name$ -- 82
+if$ -- 986
+int.to.chr$ -- 0
+int.to.str$ -- 11
+missing$ -- 11
+newline$ -- 61
+num.names$ -- 22
+pop$ -- 85
+preamble$ -- 1
+purify$ -- 63
+quote$ -- 0
+skip$ -- 122
+stack$ -- 0
+substring$ -- 194
+swap$ -- 63
+text.length$ -- 5
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 42
+warning$ -- 1
+while$ -- 37
+width$ -- 13
+write$ -- 145
+(There was 1 error message)

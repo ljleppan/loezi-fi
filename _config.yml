@@ -28,6 +28,7 @@ sass:
 theme: minima
 gems:
   - jekyll-feed
+  - jekyll-jupyter
 exclude:
   - Gemfile
   - Gemfile.lock

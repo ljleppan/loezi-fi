@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Loezi - About me</title>
-  <meta name="description" content="Just a blog">
+  <title>Loezi - News NLG, Part 0: Something something</title>
+  <meta name="description" content="">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://www.loezi.fi/">
+  <link rel="canonical" href="http://localhost:4000/2017/04/28/.html">
   <link rel="alternate" type="application/rss+xml" title="Leo Leppänen" href="/feed.xml">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300" rel="stylesheet"> 
@@ -74,7 +74,7 @@
   <div class="hero-body">
     <div class="container">
       <h1 class="title">Leo Leppänen</h1>
-      <h2 class="subtitle">About me</h2>
+      <h2 class="subtitle">News NLG, Part 0: Something something</h2>
     </div>
   </div>
 </header>
@@ -82,25 +82,48 @@
     
     <main class="section">
       <article class="container">
-  <div class="content">
-    <p>I’m a Computer Science PhD student in the <a href="https://www.helsinki.fi/en/researchgroups/computational-creativity-and-data-mining">Discovery research group</a> at the University of Helsinki Department of Computer Science.</p>
+  <header class="heading">
+    <h1 class="title">News NLG, Part 0: Something something</h1>
+    <h5 class="subtitle">
+      <time datetime="2017-04-28T00:01:00+03:00" >
+        Apr 28, 2017
+      </time>
+      
+        • <span>ljleppan</span>
+      
+    </h5>
+  </header>
+  <br>
+  <section class="content">
+    
 
-<p>My research background includes educational data mining, learning analytics and natural language generation for automated news generation.</p>
+  </section>
 
-<p>I’m interested in web technologies, user experience, natural language processing, machine learning and programming in general.</p>
+  <aside class="footnotes"></aside>
 
-<p>On the free time I dabble in history, reading everything I can.</p>
+  <script>
+    console.log("Run");
+    footnote_area = document.getElementsByClassName("footnotes")[0];
+    footnote_origins = document.querySelectorAll("aside.footnote");
 
-<p>Previously I have also done odd jobs as a part-time-instructor for the University of Helsinki CS Dept. and the University of Helsinki Open University. Courses I have been involved with include Introduction to Programming, Advanced Course in Programming, Methods of Software Engineering, Software Engineering, Software Engineering project, Server-side web developement (both Java and Ruby on Rails) etc.</p>
+    // For each footnotable thing
+    for (var i = 0; i < footnote_origins.length; i++) {
+      footnote_origin = footnote_origins[0];
+      content = footnote_origin.innerHTML;
+      identifier = "[" + (i + 1) + "]";
 
-<p>I’m proficient in Java, Python, Ruby on Rails, HTML(5), JavaScript, CSS, LESS and other associated web technologies.</p>
+      // Append footnote and anchor to bottom of page
+      footnote_area.insertAdjacentHTML('beforeEnd', '<a id="footnote-' + (i+1)  + '"></a><p class="footnote">' + identifier + " " + content + '</p>');
+    
+      // Replace in-text footnote with identifier and link
+      var replacement = document.createElement('sup');
+      replacement.innerHTML = '<a href="#footnote-' + (i+1) + '">' + identifier + '</a>';
 
-<p>For an often out-of-date but still more complete CV, see my <a href="https://fi.linkedin.com/pub/leo-lepp%C3%A4nen/b5/a65/494"> LinkedIn profile</a>.</p>
-
-  </div>
-
+      footnote_origin.parentNode.insertBefore(replacement, footnote_origin);
+      footnote_origin.parentNode.removeChild(footnote_origin);
+    }
+  </script>
 </article>
-
 
     </main>
     
@@ -115,7 +138,7 @@
           <i class="fa fa-linkedin-square"></i>
         </a>
         <a class="icon is-medium" href="https://www.cs.helsinki.fi/people/ljleppan">
-          <img src="http://www.loezi.fi/assets/hy_logo_wine.png" style="width: 21px; height: 21px;" alt="UH">
+          <img src="http://localhost:4000/assets/hy_logo_wine.png" style="width: 21px; height: 21px;" alt="UH">
         </a>
       </p>
     </div>

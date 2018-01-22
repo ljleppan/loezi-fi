@@ -19,6 +19,8 @@ main {
   flex: 1 0 auto;
 }
 
+
+
 .author-icon {
   border-radius: 32px;
   border: 1px solid #111;
@@ -42,4 +44,37 @@ footer .content {
 
 p a {
   font-weight: bold;
+}
+
+
+/* IPYNB FIXES  */
+.hl-ipython3 pre {
+  background-color: initial;
+}
+
+.rendered {
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+.rendered .input {
+  height: initial;
+}
+
+a.anchor-link {
+  padding-left: 15px;
+}
+
+.rendered .output_png {
+  text-align: center;
+  padding-top: 15px;
+}
+
+.code_cell .inner_cell {
+  border-left: 1px solid #e3e3e3;
+  margin-left: 10px;
+}
+
+.output_area .output_prompt {
+  display: none;
 }
