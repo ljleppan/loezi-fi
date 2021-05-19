@@ -12,20 +12,6 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://www.loezi.fi/2017/04/26/what-im-working-on-thesis.html">
   <link rel="alternate" type="application/rss+xml" title="Leo Leppänen" href="/feed.xml">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300" rel="stylesheet"> 
-  
-  <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-69265654-1', 'auto');
-  ga('send', 'pageview');
-</script>
-  
-
 </head>
 
 
@@ -95,8 +81,16 @@
   </header>
   <br>
   <section class="content">
-    <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>      
-    <p>As I briefly mentioned in the previous blog post “Changing fields”, I’m writing my thesis on educational data mining and learning analytics.<!--END_EXCERPT--> But those fields are quite large<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> so I figured I’d explain my topic in slightly more detail.</p>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript"src="/assets/MathJax-2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>      
+    <p>As I briefly mentioned in the previous blog post “Changing fields”, I’m writing my thesis on educational data mining and learning analytics.<!--END_EXCERPT--> But those fields are quite large<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> so I figured I’d explain my topic in slightly more detail.</p>
 
 <p>The title of my thesis is one of those word monsters that tend to exist only in the domain on thesis names: “<em>Using element-level website usage data to improve online learning materials and predict learning outcomes</em>”.</p>
 
@@ -115,10 +109,10 @@
 <p>For more details on the first research question, check out “<em>Using and Collecting Fine-Grained Usage Data to Improve Online Learning Materials</em>” once the ICSE 2017 proceedings come out. There’s also other some other stuff related to my thesis in review for various conferences, but only time will tell when/if those get published.</p>
 
 <p>As for the thesis itself, it’ll be available online once it’s accepted. The timeline for that has been “one or two more weeks” for the last four months, so it should get finished any minute now :)</p>
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:1">
-      <p>There’s even an argument to be made that the distinction between the fields is very arbitrary and they are in practice the same thing.&nbsp;<a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:1" role="doc-endnote">
+      <p>There’s even an argument to be made that the distinction between the fields is very arbitrary and they are in practice the same thing. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -158,13 +152,13 @@
     <div class="content has-text-centered">
       <p>
         <a class="icon is-medium" href="https://github.com/ljleppan">
-          <i class="fa fa-github"></i>
+            <img src="http://www.loezi.fi/assets/github.png" alt="GitHub">
         </a>
         <a class="icon is-medium" href="https://fi.linkedin.com/pub/leo-lepp%C3%A4nen/b5/a65/494">
-          <i class="fa fa-linkedin-square"></i>
+            <img src="http://www.loezi.fi/assets/linkedin.png" alt="LinkedIn">
         </a>
         <a class="icon is-medium" href="https://tuhat.helsinki.fi/portal/en/person/ljleppan">
-          <img src="http://www.loezi.fi/assets/hy_logo_wine.png" style="width: 21px; height: 21px;" alt="UH">
+          <img src="http://www.loezi.fi/assets/univhelsinki.png" alt="Univ. Helsinki">
         </a>
       </p>
     </div>

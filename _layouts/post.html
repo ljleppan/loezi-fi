@@ -15,7 +15,15 @@ layout: default
   </header>
   <br>
   <section class="content">
-    <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>      
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript"src="{{ "/assets/MathJax-2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML" | relative_url }}"></script>      
     {{ content }}
   </section>
 

@@ -19,15 +19,9 @@ main {
   flex: 1 0 auto;
 }
 
-
-
 .author-icon {
   border-radius: 32px;
   border: 1px solid #111;
-}
-
-h1, h2, h3, h4, h5, h6 {  
-    font-family: 'Alegreya Sans', sans-serif;
 }
 
 .content {
@@ -46,6 +40,13 @@ p a {
   font-weight: bold;
 }
 
+html {
+  font-size: 14px;
+}
+
+p {
+  font-size: 1.3rem;
+}
 
 /* IPYNB FIXES  */
 .hl-ipython3 pre {

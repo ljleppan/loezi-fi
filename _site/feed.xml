@@ -1,5 +1,127 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://www.loezi.fi/feed.xml" rel="self" type="application/atom+xml" /><link href="http://www.loezi.fi/" rel="alternate" type="text/html" /><updated>2018-01-25T16:18:39+02:00</updated><id>http://www.loezi.fi/</id><title type="html">Leo Leppänen</title><subtitle>Just a blog
-</subtitle><entry><title type="html">What exactly is “done”?</title><link href="http://www.loezi.fi/2017/06/19/what-exactly-is-done.html" rel="alternate" type="text/html" title="What exactly is &quot;done&quot;?" /><published>2017-06-19T14:00:00+03:00</published><updated>2017-06-19T14:00:00+03:00</updated><id>http://www.loezi.fi/2017/06/19/what-exactly-is-done</id><content type="html" xml:base="http://www.loezi.fi/2017/06/19/what-exactly-is-done.html">&lt;p&gt;There are things in life that just never feel ready. For me, one of those projects was my MSc thesis.&lt;!--END_EXCERPT--&gt; Despite long periods of now actual work getting done, I’d still feel like the thesis just wasn’t good enough to submit for review. Being so bogged down in other work ceratinly didn’t help, but the phenomena was still infuriating.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://www.loezi.fi/feed.xml" rel="self" type="application/atom+xml" /><link href="http://www.loezi.fi/" rel="alternate" type="text/html" /><updated>2021-05-19T13:04:21+03:00</updated><id>http://www.loezi.fi/feed.xml</id><title type="html">Leo Leppänen</title><subtitle>Just a blog
+</subtitle><entry><title type="html">That time with hash codes</title><link href="http://www.loezi.fi/2021/05/19/that-time-with-hashcodes.html" rel="alternate" type="text/html" title="That time with hash codes" /><published>2021-05-19T00:00:00+03:00</published><updated>2021-05-19T00:00:00+03:00</updated><id>http://www.loezi.fi/2021/05/19/that-time-with-hashcodes</id><content type="html" xml:base="http://www.loezi.fi/2021/05/19/that-time-with-hashcodes.html">&lt;p&gt;Once upon a time, we wanted to do some A-B testing on one of the Uni’s introductory programming courses. This involved splitting the students to two cohorts, one for “treatment” and the other to act as a baseline.&lt;/p&gt;
+
+&lt;p&gt;The students of the course were a mixture of degree students, open university students and people taking the course just for fun. Being lazy programmers, we figured we could simply divide the students into the treatment and control populations based on a hash of some of their attributes: this way we wouldn’t have to change the database schema or store the split anywhere explicilty, but would still be able to figure out the split whenever we needed to. The simplest option seemed to be to use the unique usernames of the user accounts.&lt;/p&gt;
+
+&lt;p&gt;Now, the vast majority (I’d questimate over 95%) of the degree students had used their student ID as their username, as they were explicitly recommended to do. Similarly, a significant amount of the open university students had used their student ID as their username. The rest, those doing the course for fun, naturally had no such ID to use and thus used whatever username they fancied.&lt;/p&gt;
+
+&lt;p&gt;We didn’t at the time see how this could be an issue and simply divided the population based on whether the Java hashCode of their username (as a String) was even or odd. This seemed like a sensible approach: after all, a good hash function splits the hash values evenly over the whole space of possible hash values.&lt;/p&gt;
+
+&lt;p&gt;To our surprise, we soon noticed that the populations were wildly different between the two groups. Almost all of our degree students had ended up in the treatment group and the population sizes were far from balanced. What on Earth was going on?&lt;/p&gt;
+
+&lt;p&gt;It turns out the way the student numbers were formed resulted in them all getting even hash codes when interpreted as Java strings.&lt;/p&gt;
+
+&lt;h2 id=&quot;checksums&quot;&gt;Checksums&lt;/h2&gt;
+
+&lt;p&gt;The student numbers are simply running numbers padded with zeros in the front so that they are eight digits long. This number is then appended with a checksum, calculated from this running prefix. The checksum calculation is fairly simple: Take the individual digits of the prefix and multiply each, starting from the end, with 7, 3 or 1 in order. So the last digit gets multiplied by 7, the second to last by 3, the third to last 1, the fourth to last by 7 again and so on. In other words, the multipliers are aligned so that the last digit is always multiplied by 7. These numbers are then summed up to form a single number. The checksum if the distance from this number to the next multiplier of ten. So for example if the sum is 91, the checksum is 9 and if the sum is 75 the checksum is 5. If the sum is already divisible by 10, the checksum is zero.&lt;/p&gt;
+
+&lt;p&gt;Expressed a bit more mathematically, the checksum is&lt;/p&gt;
+
+\[checksum(p) = \left\lceil \frac{s(p_{reverse})}{10} \right\rceil \times 10 - s(p_{reverse})\]
+
+&lt;p&gt;where $p_{reverse}$ is the prefix $p$ reversed,&lt;/p&gt;
+
+\[s(p) = \sum_{k=1}^{|p} p[k] \times multiplier(k\mod 3)\]
+
+&lt;p&gt;with $p[k]$ indicating the $k$’th digit of $p$ and&lt;/p&gt;
+
+\[multiplier(x)=\begin{cases}
+               7 \text{ if } x = 1\\
+               3 \text{ if } x = 2\\
+               1 \text{ if } x = 0
+            \end{cases}.\]
+
+&lt;p&gt;So for example, if the prefix was 01234321, then&lt;/p&gt;
+
+\[p_{reversed} = 12343210\]
+
+&lt;p&gt;which gives us the weighted sum&lt;/p&gt;
+
+\[s(p_{reversed}) = 1 \times 7 + 2 \times 3 + 3 \times 1 + 4 \times 7 + 3 \times 3 + 2 \times 1 + 1 \times 7 + 0 \times 3 = 62\]
+
+&lt;p&gt;which results in the checksum digit of&lt;/p&gt;
+
+\[\begin{split}
+    checksum(p) &amp;amp;= \left\lceil \frac{s(p_{reverse})}{10} \right\rceil \times 10 - s(p_{reverse})\\
+        &amp;amp;= \left\lceil \frac{62)}{10} \right\rceil \times 10 - 62\\
+        &amp;amp;= \left\lceil 6.2 \right\rceil \times 10 - 62\\
+        &amp;amp;= 7 \times 10 - 62\\
+        &amp;amp;= 70 - 62\\
+        &amp;amp;= 8\\
+\end{split}\]
+
+&lt;p&gt;Thus, the checksum is 8 and the complete student number would be 012343218.&lt;/p&gt;
+
+&lt;h2 id=&quot;javas-stringhashcode&quot;&gt;Java’s String.hashCode()&lt;/h2&gt;
+&lt;p&gt;Now, Java calculated hash codes for strings using the following equation:&lt;/p&gt;
+
+\[h(s)=\sum_{i=0}^{n-1}s[i] \cdot 31^{n-1-i}\]
+
+&lt;p&gt;where $s[i]$ is the numeric value of $i$’th character (i.e. its place in the UTF-16 character tables) and $n$ is the length of the string. The artihmetics are done according to Java’s rules for integers. For the numbers, the character values range from 48 for 0 to 57 for 9.&lt;/p&gt;
+
+&lt;p&gt;Now, if we calculate the checksums of the student ID prefixes only, that is the running number without the checksum, then the hash codes are well distributed and we get the same number of even and odd hash codes. But once the checksums are appended, we only get even hash codes.&lt;/p&gt;
+
+&lt;p&gt;In other words, the two equations above have a non-obvious interplay where the hash code of the checksum is odd &lt;strong&gt;if and only if&lt;/strong&gt; the checksum of the complete prefix is odd. Thus the hash code of the total student ID is always even, as it’s a sum of either two odd or two even numbers.&lt;/p&gt;
+
+&lt;p&gt;The exact mathematics of this phenomenon are, to be quite frank, beyond me. But we can trivially verify this phenomenon for the full range of student numbers using the following Java code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;public class Demo {
+
+    public static int checksum(String prefix) {
+        int[] numbers = new int[prefix.length()];
+        for (int i = 0; i &amp;lt; prefix.length(); i++) {
+            int idx = prefix.length() - 1 - i; 
+            numbers[i] = Integer.parseInt(prefix.substring(idx, idx+1));
+        }
+        int sum = 0;
+        int[] multipliers = {7, 3, 1};
+        for (int i = 0; i &amp;lt; numbers.length; i++) {
+            sum += multipliers[i%3] * numbers[i];
+        }
+        
+        return (((sum + 9) / 10) * 10) - sum;
+    }
+    
+    public static void main(String[] args) {
+        for (int i = 0; i &amp;lt; 99999999; i++) {
+            String num = String.format(&quot;%08d&quot;, i);
+            int c = checksum(num);
+            String complete = num + c;
+            if (complete.hashCode() % 2 != 0) {
+                System.out.println(complete + &quot; is not even!&quot;); //never reached
+            }
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Which is equivalent to this bit of (not very fast) python code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Python&quot;&gt;def hashcode(s):
+    # From http://garage.pimentech.net/libcommonPython_src_python_libcommon_javastringhashcode/
+    h = 0
+    for c in s:
+        h = (31 * h + ord(c)) &amp;amp; 0xFFFFFFFF
+    return ((h + 0x80000000) &amp;amp; 0xFFFFFFFF) - 0x80000000
+
+def checksum(prefix):
+    multipliers = [7,3,1]
+    s = sum((int(char) * multipliers[idx%3] \
+             for idx, char in enumerate(prefix[::-1])))
+    return (s + 9) // 10 * 10 - s
+
+any_odd = False
+for i in range(100000000):
+    prefix = &apos;{:08d}&apos;.format(i)
+    c = checksum(prefix)
+    student_id = prefix + str(c)
+    if hashcode(student_id) %2 != 0:
+        any_odd = True
+        print(student_id, &apos;had odd checksum!&apos;)
+print(&apos;All checked, any_odd={}&apos;.format(any_odd)) # All checked, any_odd=False
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So what did we learn? On a technical level, I suppose this is a nice example of accidentally botching up the distribution of hash codes. On a more methodological level, this highlights the fact that you really need to check your populations and whether they are different in any statitically significant sense and not just trusting that “obvious” things are truly correct.&lt;/p&gt;</content><author><name>ljleppan</name></author><summary type="html">A story about that time we messed by a simple A-B test.</summary></entry><entry><title type="html">What exactly is “done”?</title><link href="http://www.loezi.fi/2017/06/19/what-exactly-is-done.html" rel="alternate" type="text/html" title="What exactly is “done”?" /><published>2017-06-19T14:00:00+03:00</published><updated>2017-06-19T14:00:00+03:00</updated><id>http://www.loezi.fi/2017/06/19/what-exactly-is-done</id><content type="html" xml:base="http://www.loezi.fi/2017/06/19/what-exactly-is-done.html">&lt;p&gt;There are things in life that just never feel ready. For me, one of those projects was my MSc thesis.&lt;!--END_EXCERPT--&gt; Despite long periods of now actual work getting done, I’d still feel like the thesis just wasn’t good enough to submit for review. Being so bogged down in other work ceratinly didn’t help, but the phenomena was still infuriating.&lt;/p&gt;
 
 &lt;p&gt;Thankfully there are always deadlines, however arbitrary they seem. In my case, the deadline that saved me from spending whole weekends finding single sentences to tweak for eternity was the last departmental council meeting before the summer break: if I didn’t submit my thesis at the start of June, I’d postpone my graduation to the fall.&lt;/p&gt;
 
@@ -11,7 +133,7 @@
 
 &lt;p&gt;I received a notification of this by email while reading an Ian M. Banks novel in the middle of a North Karelian forest. A small wonder that the email got through in the first place.&lt;/p&gt;
 
-&lt;p&gt;It’s been a wild and a long ride. Thank you to everyone who provided their input and guidance, you know who you are. Especially, thank you to my wife for her understanding when I spent more of my weekend at the department than at home.&lt;/p&gt;</content><author><name>ljleppan</name></author><summary type="html">There are things in life that just never feel ready. For me, one of those projects was my MSc thesis.</summary></entry><entry><title type="html">What I’m working on: Election news NLG</title><link href="http://www.loezi.fi/2017/04/27/what-im-working-on-election-news-nlg.html" rel="alternate" type="text/html" title="What I'm working on: Election news NLG" /><published>2017-04-27T00:01:00+03:00</published><updated>2017-04-27T00:01:00+03:00</updated><id>http://www.loezi.fi/2017/04/27/what-im-working-on-election-news-nlg</id><content type="html" xml:base="http://www.loezi.fi/2017/04/27/what-im-working-on-election-news-nlg.html">&lt;p&gt;I’m currently employed by the Discovery research group on a project called Immersive Automation. So what’s that all about?&lt;/p&gt;
+&lt;p&gt;It’s been a wild and a long ride. Thank you to everyone who provided their input and guidance, you know who you are. Especially, thank you to my wife for her understanding when I spent more of my weekend at the department than at home.&lt;/p&gt;</content><author><name>ljleppan</name></author><summary type="html">There are things in life that just never feel ready. For me, one of those projects was my MSc thesis.</summary></entry><entry><title type="html">What I’m working on: Election news NLG</title><link href="http://www.loezi.fi/2017/04/27/what-im-working-on-election-news-nlg.html" rel="alternate" type="text/html" title="What I’m working on: Election news NLG" /><published>2017-04-27T00:01:00+03:00</published><updated>2017-04-27T00:01:00+03:00</updated><id>http://www.loezi.fi/2017/04/27/what-im-working-on-election-news-nlg</id><content type="html" xml:base="http://www.loezi.fi/2017/04/27/what-im-working-on-election-news-nlg.html">&lt;p&gt;I’m currently employed by the Discovery research group on a project called Immersive Automation. So what’s that all about?&lt;/p&gt;
 
 &lt;p&gt;To keep the background short, I’ll just quote the general project description from the &lt;a href=&quot;https://immersiveautomation.com/&quot;&gt;Immersive Automation website&lt;/a&gt;:&lt;/p&gt;
 
@@ -25,7 +147,7 @@
 
 &lt;p&gt;In any case, I’ll probably create a few blog posts in the future on how Valtteri works and what exactly led to that architecture. I’ll also expand upon how we plan to continue the research now that the first prototype is complete.&lt;/p&gt;
 
-&lt;p&gt;Ps. If you have the time, check out the &lt;a href=&quot;https://immersiveautomation.com/news/&quot;&gt;Immersive Automation project blog&lt;/a&gt;!&lt;/p&gt;</content><author><name>ljleppan</name></author><summary type="html">I’m currently employed by the Discovery research group on a project called Immersive Automation. So what’s that all about?</summary></entry><entry><title type="html">What I’m working on: MSc thesis</title><link href="http://www.loezi.fi/2017/04/26/what-im-working-on-thesis.html" rel="alternate" type="text/html" title="What I'm working on: MSc thesis" /><published>2017-04-26T00:01:00+03:00</published><updated>2017-04-26T00:01:00+03:00</updated><id>http://www.loezi.fi/2017/04/26/what-im-working-on-thesis</id><content type="html" xml:base="http://www.loezi.fi/2017/04/26/what-im-working-on-thesis.html">&lt;p&gt;As I briefly mentioned in the previous blog post “Changing fields”, I’m writing my thesis on educational data mining and learning analytics.&lt;!--END_EXCERPT--&gt; But those fields are quite large&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; so I figured I’d explain my topic in slightly more detail.&lt;/p&gt;
+&lt;p&gt;Ps. If you have the time, check out the &lt;a href=&quot;https://immersiveautomation.com/news/&quot;&gt;Immersive Automation project blog&lt;/a&gt;!&lt;/p&gt;</content><author><name>ljleppan</name></author><summary type="html">I’m currently employed by the Discovery research group on a project called Immersive Automation. So what’s that all about?</summary></entry><entry><title type="html">What I’m working on: MSc thesis</title><link href="http://www.loezi.fi/2017/04/26/what-im-working-on-thesis.html" rel="alternate" type="text/html" title="What I’m working on: MSc thesis" /><published>2017-04-26T00:01:00+03:00</published><updated>2017-04-26T00:01:00+03:00</updated><id>http://www.loezi.fi/2017/04/26/what-im-working-on-thesis</id><content type="html" xml:base="http://www.loezi.fi/2017/04/26/what-im-working-on-thesis.html">&lt;p&gt;As I briefly mentioned in the previous blog post “Changing fields”, I’m writing my thesis on educational data mining and learning analytics.&lt;!--END_EXCERPT--&gt; But those fields are quite large&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; so I figured I’d explain my topic in slightly more detail.&lt;/p&gt;
 
 &lt;p&gt;The title of my thesis is one of those word monsters that tend to exist only in the domain on thesis names: “&lt;em&gt;Using element-level website usage data to improve online learning materials and predict learning outcomes&lt;/em&gt;”.&lt;/p&gt;
 
@@ -44,10 +166,10 @@
 &lt;p&gt;For more details on the first research question, check out “&lt;em&gt;Using and Collecting Fine-Grained Usage Data to Improve Online Learning Materials&lt;/em&gt;” once the ICSE 2017 proceedings come out. There’s also other some other stuff related to my thesis in review for various conferences, but only time will tell when/if those get published.&lt;/p&gt;
 
 &lt;p&gt;As for the thesis itself, it’ll be available online once it’s accepted. The timeline for that has been “one or two more weeks” for the last four months, so it should get finished any minute now :)&lt;/p&gt;
-&lt;div class=&quot;footnotes&quot;&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
   &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;There’s even an argument to be made that the distinction between the fields is very arbitrary and they are in practice the same thing.&amp;nbsp;&lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;There’s even an argument to be made that the distinction between the fields is very arbitrary and they are in practice the same thing. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;</content><author><name>ljleppan</name></author><summary type="html">As I briefly mentioned in the previous blog post “Changing fields”, I’m writing my thesis on educational data mining and learning analytics.</summary></entry><entry><title type="html">Changing fields</title><link href="http://www.loezi.fi/2017/04/25/changing-fields.html" rel="alternate" type="text/html" title="Changing fields" /><published>2017-04-25T00:01:00+03:00</published><updated>2017-04-25T00:01:00+03:00</updated><id>http://www.loezi.fi/2017/04/25/changing-fields</id><content type="html" xml:base="http://www.loezi.fi/2017/04/25/changing-fields.html">&lt;p&gt;Changing jobs is always exiting, especially when that change is accompanied by a change in the field of research.&lt;/p&gt;
